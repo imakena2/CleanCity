@@ -233,7 +233,9 @@ The test plan outlines the strategy for validating the CleanCity waste managemen
 
 ## 17. Approval
 
-| Role | Signoff |
-|------|---------|
-| QA Lead |         |
-| Instructors |     |
+| Role                   |     Name      | Signoff
+|---------------         |------------   |
+| QA Lead                |  Idah Makena  |Approves the test plan, allocates resources
+|                                        |Oversees project timelines and coordination
+|QA Automation Engineer  |  Tekra Gatwiri|Writes and executes test cases, logs defects
+|QA Analyst              | Anne Anyango  |Creates test plan, manages test execution
