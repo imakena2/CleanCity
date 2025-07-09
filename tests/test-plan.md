@@ -158,7 +158,7 @@ The test plan outlines the strategy for validating the CleanCity waste managemen
 ## 10. Environmental Needs
 - **Frontend App:** Hosted on Netlify  
 - **Hardware:** MacBook Pro, iPhone, Samsung, Windows  
-- **Software:** Safari, Chrome, Edge, Firefox, VS Code, Brave  
+- **Software:** Safari, Chrome, Edge, Firefox, VS Code  
 - **Test Data:** Provided by instructors  
 - **Storage:** Browser localStorage (manually cleared per test cycle)  
 - **Test Environment:** User Acceptance Testing (UAT) environment, Netlify, localhost 3000  
