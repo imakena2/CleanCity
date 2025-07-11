@@ -3,6 +3,11 @@ const {dataService, STORAGE_KEYS} = require('./addPickupRequest');
 describe('addPickupRequest', () => {
  beforeEach(() => {
     localStorage.clear();
+    
+dataService.getAllPickupRequests = () => {
+        const data = localStorage.getItem(STORAGE_KEYS.PICKUP_REQUESTS);
+        return data ? JSON.parse(data) : [];
+      };
  });
 
  test('should add a new pickup request with all fields', () => {
