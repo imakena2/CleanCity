@@ -24,4 +24,4 @@ describe('validateFeedbackForm', () => {
         const errors = validateFeedbackForm(data);
         expect(errors.comments).toBeUndefined();
     });
-})
+});
