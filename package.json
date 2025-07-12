@@ -44,6 +44,11 @@
   }, 
   "jest": {
     "setupFiles": ["jest-localstorage-mock"]
-  }
+  },
+
+  "jest": {
+  "testEnvironment": "jsdom"
 }
+}
+
 
