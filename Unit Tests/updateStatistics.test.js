@@ -35,4 +35,4 @@ describe('updateStatistics', () => {
         expect(document.getElementById('scheduledRequests').textContent).toBe('0');
         expect(document.getElementById('completedRequests').textContent).toBe('0');
     });
-})
+});
