@@ -28,4 +28,4 @@ describe('displayFeedbackErrors', () => {
         expect(document.getElementById('requestId-error').textContent).toBe('');
         expect(document.getElementById('reason-error').textContent).toBe('');
     });
-})
+});

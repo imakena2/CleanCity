@@ -18,3 +18,4 @@ function validateFeedbackForm(data) {
   }
 
   module.exports = validateFeedbackForm;
+  
