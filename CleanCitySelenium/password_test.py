@@ -13,7 +13,7 @@ url = "https://software-testing-ten.vercel.app/register"
 driver.get(url)
 driver.maximize_window()
 
-time.sleep(20)
+time.sleep(5)
 
 # Filling registration with unique credentials
 driver.find_element(By.ID, "register-name").send_keys("Weak")

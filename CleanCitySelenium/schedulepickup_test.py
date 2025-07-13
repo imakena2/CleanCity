@@ -4,15 +4,19 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select 
 
-def test_schedulepickup():
+def setup_driver():
     options = Options() 
     options.add_experimental_option("detach", True)
     driver = webdriver.Chrome(options=options)
     driver.get("https://software-testing-ten.vercel.app/home")
     driver.maximize_window()
+    yield driver
     time.sleep(5)
 
+
 # Fill in the login form 
+def test_schedulepickup():
+    driver = setup_driver()
     driver.find_element(By.ID, "home-name").send_keys("user1")
     driver.find_element(By.ID, "home-email").send_keys("user1@gmail.com")
 
