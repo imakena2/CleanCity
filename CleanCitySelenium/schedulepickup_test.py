@@ -1,43 +1,48 @@
 import time 
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select 
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
-# ensures that the browser does not forceful quit
-options = Options()
-options.add_experimental_option("detach", True)
-# Launch the Chrome browser with the specified options
-driver = webdriver.Chrome(options=options)
-url = "https://software-testing-ten.vercel.app/home"
-driver.get(url)
-driver.maximize_window()
-time.sleep(5)
+def test_schedulepickup():
+    options = Options() 
+    options.add_experimental_option("detach", True)
+    driver = webdriver.Chrome(options=options)
+    driver.get("https://software-testing-ten.vercel.app/home")
+    driver.maximize_window()
+    time.sleep(5)
 
-driver.find_element(By.ID, "home-name").send_keys("user1")
-driver.find_element(By.ID, "home-email").send_keys("user1@gmail.com")
-# Locate the dropdown element and select an option
-location_dropdown = Select(driver.find_element(By.ID, "home-location"))
-location_dropdown.select_by_value("Mombasa")
-time.sleep(2)
-# Select waste type
-waste_dropdown = Select(driver.find_element(By.ID, "home-waste"))
-waste_dropdown.select_by_value("Recyclable") 
-time.sleep(2)
+# Fill in the login form 
+    driver.find_element(By.ID, "home-name").send_keys("user1")
+    driver.find_element(By.ID, "home-email").send_keys("user1@gmail.com")
 
-# select pickup date
-wait = WebDriverWait(driver, 11)
-pickup_date = wait.until(EC.element_to_be_clickable((By.ID, "home-date")))
-pickup_date.click()
-wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "preferredDate")))
-target_day = wait.until(EC.element_to_be_clickable(
-        (By.XPATH, "//input[@id='home-date']")
-    ))
-target_day.click()
-time.sleep(2)
-# Enter pickup additional description
-driver.find_element(By.ID, "home-desc").send_keys("Please come before 10 AM. Waste is near the back gate.")
-# Click Submit Request Button
-driver.find_element(By.CLASS_NAME, "home-btn").click()
+# Select the pickup location from the dropdown
+    dropdown_pickup = driver.find_element(By.ID, "home-location")
+    dropdown_location = Select(dropdown_pickup)
+    dropdown_location.select_by_visible_text("Mombasa")
+    time.sleep(5)
+
+# Select the waste type from the dropdown 
+    dropdown_waste = driver.find_element(By.ID, "home-waste")
+    dropdown_waste_type = Select(dropdown_waste)
+    dropdown_waste_type.select_by_visible_text('Recyclable')
+    time.sleep(5)
+
+# Calendar date selection
+    date_input = driver.find_element(By.XPATH, "//input[@id='home-date']")
+    date_input.send_keys("14/07/2025")
+
+# Additional Description 
+    driver.find_element(By.ID, "home-desc").send_keys("Please pick up the waste from my house on time on the selected date. Thank you!")
+    time.sleep(5)
+
+ # Click the Submit Request button
+    driver.find_element(By.CLASS_NAME, "home-btn").click()
+
+
+
+
+
+
+
+       
