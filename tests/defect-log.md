@@ -300,7 +300,8 @@ Navigation menu displays incorrectly on smaller screens, causing poor user exper
 **Description:**  
 The navigation menu in the CleanCity application does not respond properly to smaller screen sizes. On mobile devices, the menu items appear cramped, overlapping, or improperly positioned, making it difficult for users to navigate the application effectively. This responsive design failure significantly impacts the mobile user experience.
 
-**Environment:**  
+**Environment:**
+URL: https://software-testing-ten.vercel.app/
 Browser: Mobile browsers (Chrome, Safari, Firefox)  
 Device: Mobile devices/tablets with smaller screen sizes iPhone, Samsung  
 Environment: Frontend navigation interface
