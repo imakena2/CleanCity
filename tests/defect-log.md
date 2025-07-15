@@ -300,7 +300,8 @@ Navigation menu displays incorrectly on smaller screens, causing poor user exper
 **Description:**  
 The navigation menu in the CleanCity application does not respond properly to smaller screen sizes. On mobile devices, the menu items appear cramped, overlapping, or improperly positioned, making it difficult for users to navigate the application effectively. This responsive design failure significantly impacts the mobile user experience.
 
-**Environment:**  
+**Environment:**
+URL: https://software-testing-ten.vercel.app/
 Browser: Mobile browsers (Chrome, Safari, Firefox)  
 Device: Mobile devices/tablets with smaller screen sizes iPhone, Samsung  
 Environment: Frontend navigation interface
@@ -652,3 +653,29 @@ No `alt` attributes are found on the image tags, resulting in  skipped content b
 - Excludes screen reader users from accessing key content  
 - Reduces site accessibility score and usability
 
+### BUG021 – No Password Visibility Toggle
+**Severity:** Low to Medium  
+**Type:** Usability Bug  
+**Environment:** Chrome v114, Windows 10, CleanCity Web App – Registration Page
+
+### Summary
+Password field lacks a visibility toggle (eye icon).
+
+### Steps to Reproduce
+1. Navigate to the registration or login page.
+2. Enter a password in the password field.
+3. Observe the absence of a password visibility toggle icon.
+
+### Expected Result
+A toggle icon  should be present to allow users to show/hide their password.
+
+### Actual Result
+Password remains hidden with no way for users to reveal it.
+
+### 💥 Impact
+- Increases risk of typos during password entry  
+- Difficult for users with cognitive or motor impairments  
+- Fails to follow modern UX patterns and WCAG usability recommendations
+
+### 💡 Recommendation
+Add a visibility toggle for password fields to improve user experience and accessibility compliance.
