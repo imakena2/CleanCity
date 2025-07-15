@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>jest-stare!</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/diff2html.min.css" rel="stylesheet" type="text/css">
+    <link href="css/jest-stare.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/holder.js"></script>
+    <script src="js/diff2html.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/view.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" id="navbar-title" href="#">jest-stare</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="coverage-link" class="nav-link disabled" href="#">Coverage</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="onoff-switch mr-sm-2 ml-sm-2">
+                            <input type="checkbox" name="off-switch" class="off-switch-checkbox" id="lab-passoff-switch" checked>
+                            <label class="onoff-switch-label" for="lab-passoff-switch">
+                                <span class="pass off-switch-inner"></span>
+                                <span class="off-switch-switch"></span>
+                            </label>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="onoff-switch mr-sm-2 ml-sm-2">
+                            <input type="checkbox" name="off-switch" class="off-switch-checkbox" id="lab-failoff-switch" checked>
+                            <label class="onoff-switch-label" for="lab-failoff-switch">
+                                <span class="fail off-switch-inner"></span>
+                                <span class="off-switch-switch"></span>
+                            </label>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="onoff-switch mr-sm-2 ml-sm-2">
+                            <input type="checkbox" name="off-switch" class="off-switch-checkbox" id="lab-pendingoff-switch" checked>
+                            <label class="onoff-switch-label" for="lab-pendingoff-switch">
+                                <span class="pending off-switch-inner"></span>
+                                <span class="off-switch-switch"></span>
+                            </label>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="onoff-switch mr-sm-2 ml-sm-2">
+                            <input type="checkbox" name="off-switch" class="off-switch-checkbox" id="lab-todooff-switch" checked>
+                            <label class="onoff-switch-label" for="lab-todooff-switch">
+                                <span class="todo off-switch-inner"></span>
+                                <span class="off-switch-switch"></span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline mt-2 mt-md-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" disabled>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
+                </form> -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- Begin page content -->
+    <main role="main" class="container">
+
+        <h1 class="mt-5"></h1>
+
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+            <div class="col-lg-4">
+                <canvas id="test-suites-canvas" width="100" height="100"></canvas>
+                <h2>Test Suites</h2>
+                <div class="list-group">
+                    <p id="test-suites-results" class="list-group-item list-group-item-action">3 passed, 14 total</p>
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <canvas id="tests-canvas" width="100" height="100"></canvas>
+                <h2>Tests</h2>
+                <div class="list-group">
+                    <p id="tests-results" class="list-group-item list-group-item-action">16 passed, 39 total</p>
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-4" id="snapshots-group">
+                <canvas id="snapshots-canvas" width="100" height="100"></canvas>
+                <h2>Snapshots</h2>
+                <div class="list-group">
+                    <p id="snapshots-results" class="list-group-item list-group-item-action">0 passed, 0 total</p>
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+        </div>
+
+        <div id="loading-info" class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                aria-valuemax="100" style="width: 100%"></div>
+        </div>
+
+        <div class="d-none" id="test-summary"></div>
+        <div class="d-none" id="test-config">{
+  &quot;resultDir&quot;: &quot;jest-stare&#x2F;&quot;,
+  &quot;reportTitle&quot;: &quot;CleanCity Test Report&quot;,
+  &quot;additionalResultsProcessors&quot;: [],
+  &quot;coverageLink&quot;: &quot;.&#x2F;coverage&#x2F;lcov-report&#x2F;index.html&quot;,
+  &quot;resultHtml&quot;: &quot;index.html&quot;,
+  &quot;resultJson&quot;: &quot;jest-results.json&quot;
+}</div>
+        <div id="accordion">
+            <div class="d-none" id="test-results">{
+  &quot;numFailedTestSuites&quot;: 11,
+  &quot;numFailedTests&quot;: 23,
+  &quot;numPassedTestSuites&quot;: 3,
+  &quot;numPassedTests&quot;: 16,
+  &quot;numPendingTestSuites&quot;: 0,
+  &quot;numPendingTests&quot;: 0,
+  &quot;numRuntimeErrorTestSuites&quot;: 1,
+  &quot;numTodoTests&quot;: 0,
+  &quot;numTotalTestSuites&quot;: 14,
+  &quot;numTotalTests&quot;: 39,
+  &quot;openHandles&quot;: [],
+  &quot;snapshot&quot;: {
+    &quot;added&quot;: 0,
+    &quot;didUpdate&quot;: false,
+    &quot;failure&quot;: false,
+    &quot;filesAdded&quot;: 0,
+    &quot;filesRemoved&quot;: 0,
+    &quot;filesRemovedList&quot;: [],
+    &quot;filesUnmatched&quot;: 0,
+    &quot;filesUpdated&quot;: 0,
+    &quot;matched&quot;: 0,
+    &quot;total&quot;: 0,
+    &quot;unchecked&quot;: 0,
+    &quot;uncheckedKeysByFile&quot;: [],
+    &quot;unmatched&quot;: 0,
+    &quot;updated&quot;: 0
+  },
+  &quot;startTime&quot;: 1752428712148,
+  &quot;success&quot;: false,
+  &quot;testResults&quot;: [
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 1,
+      &quot;numPassingTests&quot;: 3,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428713447,
+        &quot;runtime&quot;: 897,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428712550
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;register.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;register&quot;
+          ],
+          &quot;duration&quot;: 7,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;register should register a new user successfully&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should register a new user successfully&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;register&quot;
+          ],
+          &quot;duration&quot;: 2,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;register should not register if email already exists&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should not register if email already exists&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;register&quot;
+          ],
+          &quot;duration&quot;: 17,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;register should show error if user creation fails&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should show error if user creation fails&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;register&quot;
+          ],
+          &quot;duration&quot;: 6,
+          &quot;failureDetails&quot;: [
+            {
+              &quot;matcherResult&quot;: {
+                &quot;actual&quot;: true,
+                &quot;expected&quot;: false,
+                &quot;message&quot;: &quot;\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) &#x2F;&#x2F; Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m&quot;,
+                &quot;name&quot;: &quot;toBe&quot;,
+                &quot;pass&quot;: false
+              }
+            }
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) &#x2F;&#x2F; Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;register.test.js:90:24)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:218:40)\n    at processTicksAndRejections (node:internal&#x2F;process&#x2F;task_queues:105:5)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:155:3)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)&quot;
+          ],
+          &quot;fullName&quot;: &quot;register should handle empty user data&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should handle empty user data&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mregister › should handle empty user data\u001b[39m\u001b[22m\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) &#x2F;&#x2F; Object.is equality\u001b[22m\n\n    Expected: \u001b[32mfalse\u001b[39m\n    Received: \u001b[31mtrue\u001b[39m\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 88 |\u001b[39m         \u001b[36mconst\u001b[39m result \u001b[33m&#x3D;\u001b[39m register(userData\u001b[33m,\u001b[39m mockDataService\u001b[33m,\u001b[39m mockShowMessage)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 89 |\u001b[39m     \u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 90 |\u001b[39m         expect(result)\u001b[33m.\u001b[39mtoBe(\u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 91 |\u001b[39m         expect(mockShowMessage)\u001b[33m.\u001b[39mtoHaveBeenCalledWith(\u001b[32m&#39;register-error&#39;\u001b[39m\u001b[33m,\u001b[39m expect\u001b[33m.\u001b[39mstringContaining(\u001b[32m&#39;Please fill in all the fields&#39;\u001b[39m))\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 92 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 93 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;register.test.js\u001b[39m\u001b[0m\u001b[2m:90:24)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;failureMessage&quot;: &quot;  \u001b[1m● \u001b[22mTest suite failed to run\n\n    ReferenceError: localStorage is not defined\n\n    \u001b[0m \u001b[90m  7 |\u001b[39m \u001b[90m&#x2F;&#x2F; Initialize with sample data if no data exists\u001b[39m\n     \u001b[90m  8 |\u001b[39m \u001b[36mconst\u001b[39m initializeData \u001b[33m&#x3D;\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\n    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[39m\u001b[90m  9 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[33m!\u001b[39mlocalStorage\u001b[33m.\u001b[39mgetItem(\u001b[33mSTORAGE_KEYS\u001b[39m\u001b[33m.\u001b[39m\u001b[33mPICKUP_REQUESTS\u001b[39m)) {\n     \u001b[90m    |\u001b[39m   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n     \u001b[90m 10 |\u001b[39m     \u001b[36mconst\u001b[39m sampleRequests \u001b[33m&#x3D;\u001b[39m [\n     \u001b[90m 11 |\u001b[39m       {\n     \u001b[90m 12 |\u001b[39m         id\u001b[33m:\u001b[39m \u001b[32m&#39;REQ001&#39;\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\n      \u001b[2mat initializeData (\u001b[22mUnit Tests&#x2F;initializeData.js\u001b[2m:9:3)\u001b[22m\n      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22mUnit Tests&#x2F;initializeData.js\u001b[2m:83:1)\u001b[22m\n      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[0m\u001b[36mUnit Tests&#x2F;initializeData.test.js\u001b[39m\u001b[0m\u001b[2m:1:42)\u001b[22m\n&quot;,
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 0,
+      &quot;numPassingTests&quot;: 0,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 0,
+        &quot;runtime&quot;: 0,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 0
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testExecError&quot;: {},
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;initializeData.test.js&quot;,
+      &quot;testResults&quot;: []
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 2,
+      &quot;numPassingTests&quot;: 0,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428714258,
+        &quot;runtime&quot;: 291,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428713967
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;addPickupRequest.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;addPickupRequest&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: localStorage is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;addPickupRequest.test.js:5:5)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;addPickupRequest should add a new pickup request with all fields&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should add a new pickup request with all fields&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;addPickupRequest&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: localStorage is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;addPickupRequest.test.js:5:5)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;addPickupRequest should store the request in localStorage&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should store the request in localStorage&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1maddPickupRequest › should add a new pickup request with all fields\u001b[39m\u001b[22m\n\n    ReferenceError: localStorage is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 3 |\u001b[39m describe(\u001b[32m&#39;addPickupRequest&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 4 |\u001b[39m  beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 5 |\u001b[39m     localStorage\u001b[33m.\u001b[39mclear()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m   |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 6 |\u001b[39m     \u001b[22m\n\u001b[2m     \u001b[90m 7 |\u001b[39m dataService\u001b[33m.\u001b[39mgetAllPickupRequests \u001b[33m&#x3D;\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 8 |\u001b[39m         \u001b[36mconst\u001b[39m data \u001b[33m&#x3D;\u001b[39m localStorage\u001b[33m.\u001b[39mgetItem(\u001b[33mSTORAGE_KEYS\u001b[39m\u001b[33m.\u001b[39m\u001b[33mPICKUP_REQUESTS\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;addPickupRequest.test.js\u001b[39m\u001b[0m\u001b[2m:5:5)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1maddPickupRequest › should store the request in localStorage\u001b[39m\u001b[22m\n\n    ReferenceError: localStorage is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 3 |\u001b[39m describe(\u001b[32m&#39;addPickupRequest&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 4 |\u001b[39m  beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 5 |\u001b[39m     localStorage\u001b[33m.\u001b[39mclear()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m   |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 6 |\u001b[39m     \u001b[22m\n\u001b[2m     \u001b[90m 7 |\u001b[39m dataService\u001b[33m.\u001b[39mgetAllPickupRequests \u001b[33m&#x3D;\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 8 |\u001b[39m         \u001b[36mconst\u001b[39m data \u001b[33m&#x3D;\u001b[39m localStorage\u001b[33m.\u001b[39mgetItem(\u001b[33mSTORAGE_KEYS\u001b[39m\u001b[33m.\u001b[39m\u001b[33mPICKUP_REQUESTS\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;addPickupRequest.test.js\u001b[39m\u001b[0m\u001b[2m:5:5)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 1,
+      &quot;numPassingTests&quot;: 2,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428714517,
+        &quot;runtime&quot;: 135,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428714382
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;filterRequestsByLocation.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;filterRequestsByLocation&quot;
+          ],
+          &quot;duration&quot;: 6,
+          &quot;failureDetails&quot;: [
+            {
+              &quot;matcherResult&quot;: {
+                &quot;actual&quot;: [],
+                &quot;expected&quot;: [
+                  {
+                    &quot;id&quot;: &quot;REQ001&quot;,
+                    &quot;location&quot;: &quot;Nairobi&quot;
+                  },
+                  {
+                    &quot;id&quot;: &quot;REQ002&quot;,
+                    &quot;location&quot;: &quot;Kisumu&quot;
+                  },
+                  {
+                    &quot;id&quot;: &quot;REQ003&quot;,
+                    &quot;location&quot;: &quot;Mombasa&quot;
+                  },
+                  {
+                    &quot;id&quot;: &quot;REQ004&quot;,
+                    &quot;location&quot;: &quot;Eldoret&quot;
+                  }
+                ],
+                &quot;message&quot;: &quot;\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) &#x2F;&#x2F; deep equality\u001b[22m\n\n\u001b[32m- Expected  - 18\u001b[39m\n\u001b[31m+ Received  +  1\u001b[39m\n\n\u001b[32m- Array [\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \&quot;id\&quot;: \&quot;REQ001\&quot;,\u001b[39m\n\u001b[32m-     \&quot;location\&quot;: \&quot;Nairobi\&quot;,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \&quot;id\&quot;: \&quot;REQ002\&quot;,\u001b[39m\n\u001b[32m-     \&quot;location\&quot;: \&quot;Kisumu\&quot;,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \&quot;id\&quot;: \&quot;REQ003\&quot;,\u001b[39m\n\u001b[32m-     \&quot;location\&quot;: \&quot;Mombasa\&quot;,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \&quot;id\&quot;: \&quot;REQ004\&quot;,\u001b[39m\n\u001b[32m-     \&quot;location\&quot;: \&quot;Eldoret\&quot;,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m- ]\u001b[39m\n\u001b[31m+ Array []\u001b[39m&quot;,
+                &quot;name&quot;: &quot;toEqual&quot;,
+                &quot;pass&quot;: false
+              }
+            }
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) &#x2F;&#x2F; deep equality\u001b[22m\n\n\u001b[32m- Expected  - 18\u001b[39m\n\u001b[31m+ Received  +  1\u001b[39m\n\n\u001b[32m- Array [\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \&quot;id\&quot;: \&quot;REQ001\&quot;,\u001b[39m\n\u001b[32m-     \&quot;location\&quot;: \&quot;Nairobi\&quot;,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \&quot;id\&quot;: \&quot;REQ002\&quot;,\u001b[39m\n\u001b[32m-     \&quot;location\&quot;: \&quot;Kisumu\&quot;,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \&quot;id\&quot;: \&quot;REQ003\&quot;,\u001b[39m\n\u001b[32m-     \&quot;location\&quot;: \&quot;Mombasa\&quot;,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \&quot;id\&quot;: \&quot;REQ004\&quot;,\u001b[39m\n\u001b[32m-     \&quot;location\&quot;: \&quot;Eldoret\&quot;,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m- ]\u001b[39m\n\u001b[31m+ Array []\u001b[39m\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;filterRequestsByLocation.test.js:20:24)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:218:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:155:3)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;filterRequestsByLocation should return all requests when no location is specified&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should return all requests when no location is specified&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;filterRequestsByLocation&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;filterRequestsByLocation should return requests for the specified location&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should return requests for the specified location&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;filterRequestsByLocation&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;filterRequestsByLocation should show the bug where Eldoret requests are incorrectly returned as Nairobi&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should show the bug where Eldoret requests are incorrectly returned as Nairobi&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mfilterRequestsByLocation › should return all requests when no location is specified\u001b[39m\u001b[22m\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) &#x2F;&#x2F; deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 18\u001b[39m\n    \u001b[31m+ Received  +  1\u001b[39m\n\n    \u001b[32m- Array [\u001b[39m\n    \u001b[32m-   Object {\u001b[39m\n    \u001b[32m-     \&quot;id\&quot;: \&quot;REQ001\&quot;,\u001b[39m\n    \u001b[32m-     \&quot;location\&quot;: \&quot;Nairobi\&quot;,\u001b[39m\n    \u001b[32m-   },\u001b[39m\n    \u001b[32m-   Object {\u001b[39m\n    \u001b[32m-     \&quot;id\&quot;: \&quot;REQ002\&quot;,\u001b[39m\n    \u001b[32m-     \&quot;location\&quot;: \&quot;Kisumu\&quot;,\u001b[39m\n    \u001b[32m-   },\u001b[39m\n    \u001b[32m-   Object {\u001b[39m\n    \u001b[32m-     \&quot;id\&quot;: \&quot;REQ003\&quot;,\u001b[39m\n    \u001b[32m-     \&quot;location\&quot;: \&quot;Mombasa\&quot;,\u001b[39m\n    \u001b[32m-   },\u001b[39m\n    \u001b[32m-   Object {\u001b[39m\n    \u001b[32m-     \&quot;id\&quot;: \&quot;REQ004\&quot;,\u001b[39m\n    \u001b[32m-     \&quot;location\&quot;: \&quot;Eldoret\&quot;,\u001b[39m\n    \u001b[32m-   },\u001b[39m\n    \u001b[32m- ]\u001b[39m\n    \u001b[31m+ Array []\u001b[39m\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 18 |\u001b[39m     test(\u001b[32m&#39;should return all requests when no location is specified&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 19 |\u001b[39m         \u001b[36mconst\u001b[39m result \u001b[33m&#x3D;\u001b[39m dataService\u001b[33m.\u001b[39mfilterRequestsByLocation()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 20 |\u001b[39m         expect(result)\u001b[33m.\u001b[39mtoEqual(mockRequests)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 21 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 22 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 23 |\u001b[39m     test(\u001b[32m&#39;should return requests for the specified location&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;filterRequestsByLocation.test.js\u001b[39m\u001b[0m\u001b[2m:20:24)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 3,
+      &quot;numPassingTests&quot;: 0,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428715113,
+        &quot;runtime&quot;: 282,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428714831
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;setupAdminControls.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;setupAdminControls&quot;
+          ],
+          &quot;duration&quot;: 2,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;setupAdminControls.test.js:19:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;setupAdminControls should populate request select with options&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should populate request select with options&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;setupAdminControls&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;setupAdminControls.test.js:19:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;setupAdminControls should enable update button when both selects have values&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should enable update button when both selects have values&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;setupAdminControls&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;setupAdminControls.test.js:19:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;setupAdminControls should call dataService.updateRequestStatus on button click&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should call dataService.updateRequestStatus on button click&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1msetupAdminControls › should populate request select with options\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 17 |\u001b[39m         loadAdminData \u001b[33m&#x3D;\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 18 |\u001b[39m         \u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 19 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 20 |\u001b[39m \u001b[32m        &lt;select id&#x3D;\&quot;requestSelect\&quot;&gt;&lt;&#x2F;select&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 21 |\u001b[39m \u001b[32m        &lt;select id&#x3D;\&quot;statusSelect\&quot;&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 22 |\u001b[39m \u001b[32m            &lt;option value&#x3D;\&quot;pending\&quot;&gt;Pending&lt;&#x2F;option&gt;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;setupAdminControls.test.js\u001b[39m\u001b[0m\u001b[2m:19:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1msetupAdminControls › should enable update button when both selects have values\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 17 |\u001b[39m         loadAdminData \u001b[33m&#x3D;\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 18 |\u001b[39m         \u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 19 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 20 |\u001b[39m \u001b[32m        &lt;select id&#x3D;\&quot;requestSelect\&quot;&gt;&lt;&#x2F;select&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 21 |\u001b[39m \u001b[32m        &lt;select id&#x3D;\&quot;statusSelect\&quot;&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 22 |\u001b[39m \u001b[32m            &lt;option value&#x3D;\&quot;pending\&quot;&gt;Pending&lt;&#x2F;option&gt;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;setupAdminControls.test.js\u001b[39m\u001b[0m\u001b[2m:19:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1msetupAdminControls › should call dataService.updateRequestStatus on button click\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 17 |\u001b[39m         loadAdminData \u001b[33m&#x3D;\u001b[39m jest\u001b[33m.\u001b[39mfn()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 18 |\u001b[39m         \u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 19 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 20 |\u001b[39m \u001b[32m        &lt;select id&#x3D;\&quot;requestSelect\&quot;&gt;&lt;&#x2F;select&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 21 |\u001b[39m \u001b[32m        &lt;select id&#x3D;\&quot;statusSelect\&quot;&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 22 |\u001b[39m \u001b[32m            &lt;option value&#x3D;\&quot;pending\&quot;&gt;Pending&lt;&#x2F;option&gt;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;setupAdminControls.test.js\u001b[39m\u001b[0m\u001b[2m:19:9)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 2,
+      &quot;numPassingTests&quot;: 0,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428715274,
+        &quot;runtime&quot;: 116,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428715158
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;handleFeedbackSubmit.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;handleFeedbackSubmit&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;handleFeedbackSubmit.test.js:12:5)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;handleFeedbackSubmit should submit feedback successfully if no validation errors&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should submit feedback successfully if no validation errors&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;handleFeedbackSubmit&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;handleFeedbackSubmit.test.js:12:5)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;handleFeedbackSubmit should display errors if validation fails&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should display errors if validation fails&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mhandleFeedbackSubmit › should submit feedback successfully if no validation errors\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 10 |\u001b[39m   beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 11 |\u001b[39m     \u001b[90m&#x2F;&#x2F; Set up mock form in the DOM\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 12 |\u001b[39m     document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 13 |\u001b[39m \u001b[32m      &lt;form id&#x3D;\&quot;feedback-form\&quot;&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 14 |\u001b[39m \u001b[32m        &lt;input name&#x3D;\&quot;requestId\&quot; value&#x3D;\&quot;REQ001\&quot; &#x2F;&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 15 |\u001b[39m \u001b[32m        &lt;input name&#x3D;\&quot;reason\&quot; value&#x3D;\&quot;Late pickup\&quot; &#x2F;&gt;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;handleFeedbackSubmit.test.js\u001b[39m\u001b[0m\u001b[2m:12:5)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mhandleFeedbackSubmit › should display errors if validation fails\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 10 |\u001b[39m   beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 11 |\u001b[39m     \u001b[90m&#x2F;&#x2F; Set up mock form in the DOM\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 12 |\u001b[39m     document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 13 |\u001b[39m \u001b[32m      &lt;form id&#x3D;\&quot;feedback-form\&quot;&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 14 |\u001b[39m \u001b[32m        &lt;input name&#x3D;\&quot;requestId\&quot; value&#x3D;\&quot;REQ001\&quot; &#x2F;&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 15 |\u001b[39m \u001b[32m        &lt;input name&#x3D;\&quot;reason\&quot; value&#x3D;\&quot;Late pickup\&quot; &#x2F;&gt;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;handleFeedbackSubmit.test.js\u001b[39m\u001b[0m\u001b[2m:12:5)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 2,
+      &quot;numPassingTests&quot;: 0,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428715892,
+        &quot;runtime&quot;: 485,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428715407
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;updateStatistics.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;updateStatistics&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;updateStatistics.test.js:6:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;updateStatistics should update statistics correctly&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should update statistics correctly&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;updateStatistics&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;updateStatistics.test.js:6:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;updateStatistics should handle empty requests array&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should handle empty requests array&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mupdateStatistics › should update statistics correctly\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 4 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 5 |\u001b[39m     beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 6 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m   |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 7 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;totalRequests\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 8 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;pendingRequests\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 9 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;scheduledRequests\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;updateStatistics.test.js\u001b[39m\u001b[0m\u001b[2m:6:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mupdateStatistics › should handle empty requests array\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 4 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 5 |\u001b[39m     beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 6 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m   |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 7 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;totalRequests\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 8 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;pendingRequests\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 9 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;scheduledRequests\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;updateStatistics.test.js\u001b[39m\u001b[0m\u001b[2m:6:9)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 4,
+      &quot;numPassingTests&quot;: 0,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428716913,
+        &quot;runtime&quot;: 671,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428716242
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;login.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;login&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: localStorage is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;login.test.js:28:5)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;login should login successfully with valid credentials&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should login successfully with valid credentials&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;login&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: localStorage is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;login.test.js:28:5)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;login should fail login with invalid credentials&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should fail login with invalid credentials&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;login&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: localStorage is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;login.test.js:28:5)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;login should fail if password is short, for instance contains three characters&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should fail if password is short, for instance contains three characters&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;login&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: localStorage is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;login.test.js:28:5)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;login should fail if email is not valid&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should fail if email is not valid&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mlogin › should login successfully with valid credentials\u001b[39m\u001b[22m\n\n    ReferenceError: localStorage is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 26 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 27 |\u001b[39m     \u001b[90m&#x2F;&#x2F; Clear localStorage before each test\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 28 |\u001b[39m     localStorage\u001b[33m.\u001b[39mclear()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 29 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 30 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 31 |\u001b[39m   test(\u001b[32m&#39;should login successfully with valid credentials&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;login.test.js\u001b[39m\u001b[0m\u001b[2m:28:5)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mlogin › should fail login with invalid credentials\u001b[39m\u001b[22m\n\n    ReferenceError: localStorage is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 26 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 27 |\u001b[39m     \u001b[90m&#x2F;&#x2F; Clear localStorage before each test\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 28 |\u001b[39m     localStorage\u001b[33m.\u001b[39mclear()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 29 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 30 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 31 |\u001b[39m   test(\u001b[32m&#39;should login successfully with valid credentials&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;login.test.js\u001b[39m\u001b[0m\u001b[2m:28:5)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mlogin › should fail if password is short, for instance contains three characters\u001b[39m\u001b[22m\n\n    ReferenceError: localStorage is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 26 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 27 |\u001b[39m     \u001b[90m&#x2F;&#x2F; Clear localStorage before each test\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 28 |\u001b[39m     localStorage\u001b[33m.\u001b[39mclear()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 29 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 30 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 31 |\u001b[39m   test(\u001b[32m&#39;should login successfully with valid credentials&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;login.test.js\u001b[39m\u001b[0m\u001b[2m:28:5)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mlogin › should fail if email is not valid\u001b[39m\u001b[22m\n\n    ReferenceError: localStorage is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 26 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 27 |\u001b[39m     \u001b[90m&#x2F;&#x2F; Clear localStorage before each test\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 28 |\u001b[39m     localStorage\u001b[33m.\u001b[39mclear()\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 29 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 30 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 31 |\u001b[39m   test(\u001b[32m&#39;should login successfully with valid credentials&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;login.test.js\u001b[39m\u001b[0m\u001b[2m:28:5)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 3,
+      &quot;numPassingTests&quot;: 0,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428717525,
+        &quot;runtime&quot;: 396,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428717129
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;displayFeedbackErrors.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;displayFeedbackErrors&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;displayFeedbackErrors.test.js:7:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;displayFeedbackErrors should display requestId error message&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should display requestId error message&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;displayFeedbackErrors&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;displayFeedbackErrors.test.js:7:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;displayFeedbackErrors should display reason error message&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should display reason error message&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;displayFeedbackErrors&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;displayFeedbackErrors.test.js:7:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;displayFeedbackErrors should not display any error messages if no errors are present&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should not display any error messages if no errors are present&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mdisplayFeedbackErrors › should display requestId error message\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m  5 |\u001b[39m     beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m  6 |\u001b[39m         \u001b[90m&#x2F;&#x2F; Clear previous error messages\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m  7 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m  8 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;requestId-error\&quot; class&#x3D;\&quot;error-message\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m  9 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;reason-error\&quot; class&#x3D;\&quot;error-message\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 10 |\u001b[39m \u001b[32m        &#x60;\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;displayFeedbackErrors.test.js\u001b[39m\u001b[0m\u001b[2m:7:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mdisplayFeedbackErrors › should display reason error message\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m  5 |\u001b[39m     beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m  6 |\u001b[39m         \u001b[90m&#x2F;&#x2F; Clear previous error messages\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m  7 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m  8 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;requestId-error\&quot; class&#x3D;\&quot;error-message\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m  9 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;reason-error\&quot; class&#x3D;\&quot;error-message\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 10 |\u001b[39m \u001b[32m        &#x60;\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;displayFeedbackErrors.test.js\u001b[39m\u001b[0m\u001b[2m:7:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mdisplayFeedbackErrors › should not display any error messages if no errors are present\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m  5 |\u001b[39m     beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m  6 |\u001b[39m         \u001b[90m&#x2F;&#x2F; Clear previous error messages\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m  7 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m  8 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;requestId-error\&quot; class&#x3D;\&quot;error-message\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m  9 |\u001b[39m \u001b[32m            &lt;div id&#x3D;\&quot;reason-error\&quot; class&#x3D;\&quot;error-message\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 10 |\u001b[39m \u001b[32m        &#x60;\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;displayFeedbackErrors.test.js\u001b[39m\u001b[0m\u001b[2m:7:9)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 2,
+      &quot;numPassingTests&quot;: 0,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428717729,
+        &quot;runtime&quot;: 119,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428717610
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;showMessage.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;showMessage&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [
+            {},
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;showMessage.test.js:9:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;,
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;showMessage.test.js:16:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:158:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;showMessage should display a message in the specified element&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should display a message in the specified element&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;showMessage&quot;
+          ],
+          &quot;duration&quot;: 2,
+          &quot;failureDetails&quot;: [
+            {},
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;showMessage.test.js:9:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:148:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;,
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;showMessage.test.js:16:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusHook (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:181:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:158:5)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;showMessage should not throw an error if the element does not exist&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should not throw an error if the element does not exist&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mshowMessage › should display a message in the specified element\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m  7 |\u001b[39m     beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m  8 |\u001b[39m         \u001b[90m&#x2F;&#x2F; Create a mock element to simulate the DOM\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m  9 |\u001b[39m         messageElement \u001b[33m&#x3D;\u001b[39m document\u001b[33m.\u001b[39mcreateElement(\u001b[32m&#39;div&#39;\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 10 |\u001b[39m         messageElement\u001b[33m.\u001b[39mid \u001b[33m&#x3D;\u001b[39m \u001b[32m&#39;testMessage&#39;\u001b[39m\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 11 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39mappendChild(messageElement)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 12 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;showMessage.test.js\u001b[39m\u001b[0m\u001b[2m:9:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mshowMessage › should display a message in the specified element\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 14 |\u001b[39m     afterEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 15 |\u001b[39m         \u001b[90m&#x2F;&#x2F; Clean up the mock element after each test\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 16 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39mremoveChild(messageElement)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 17 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 18 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 19 |\u001b[39m     test(\u001b[32m&#39;should display a message in the specified element&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;showMessage.test.js\u001b[39m\u001b[0m\u001b[2m:16:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mshowMessage › should not throw an error if the element does not exist\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m  7 |\u001b[39m     beforeEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m  8 |\u001b[39m         \u001b[90m&#x2F;&#x2F; Create a mock element to simulate the DOM\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m  9 |\u001b[39m         messageElement \u001b[33m&#x3D;\u001b[39m document\u001b[33m.\u001b[39mcreateElement(\u001b[32m&#39;div&#39;\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 10 |\u001b[39m         messageElement\u001b[33m.\u001b[39mid \u001b[33m&#x3D;\u001b[39m \u001b[32m&#39;testMessage&#39;\u001b[39m\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 11 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39mappendChild(messageElement)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 12 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;showMessage.test.js\u001b[39m\u001b[0m\u001b[2m:9:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mshowMessage › should not throw an error if the element does not exist\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 14 |\u001b[39m     afterEach(() \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 15 |\u001b[39m         \u001b[90m&#x2F;&#x2F; Clean up the mock element after each test\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 16 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39mremoveChild(messageElement)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 17 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 18 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 19 |\u001b[39m     test(\u001b[32m&#39;should display a message in the specified element&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;showMessage.test.js\u001b[39m\u001b[0m\u001b[2m:16:9)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 0,
+      &quot;numPassingTests&quot;: 4,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428718031,
+        &quot;runtime&quot;: 220,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428717811
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;validateFeedbackForm.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;validateFeedbackForm&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;validateFeedbackForm should return an error if requestId is empty&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should return an error if requestId is empty&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;validateFeedbackForm&quot;
+          ],
+          &quot;duration&quot;: 3,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;validateFeedbackForm should return an error if reason is not selected&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should return an error if reason is not selected&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;validateFeedbackForm&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;validateFeedbackForm should not return any errors for valid input&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should not return any errors for valid input&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;validateFeedbackForm&quot;
+          ],
+          &quot;duration&quot;: 3,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;validateFeedbackForm should not validate comments, but should be present for proper feedback tracking&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should not validate comments, but should be present for proper feedback tracking&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: null
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 0,
+      &quot;numPassingTests&quot;: 2,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428718298,
+        &quot;runtime&quot;: 161,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428718137
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;logout.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;logout)&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;logout) should call dataService.logout&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should call dataService.logout&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;logout)&quot;
+          ],
+          &quot;duration&quot;: 26,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;logout) should navigate to home page&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should navigate to home page&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: null
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 3,
+      &quot;numPassingTests&quot;: 0,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428718663,
+        &quot;runtime&quot;: 216,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428718447
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;displayPickupErrors.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;displayPickupErrors&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;displayPickupErrors.test.js:5:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:218:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:155:3)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;displayPickupErrors should clear previous error messages&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should clear previous error messages&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;displayPickupErrors&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;displayPickupErrors.test.js:20:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:218:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:155:3)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;displayPickupErrors should display location error&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should display location error&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;displayPickupErrors&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [
+            {}
+          ],
+          &quot;failureMessages&quot;: [
+            &quot;ReferenceError: document is not defined\n    at Object.&lt;anonymous&gt; (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;displayPickupErrors.test.js:31:9)\n    at Promise.then.completed (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:391:28)\n    at new Promise (&lt;anonymous&gt;)\n    at callAsyncCircusFn (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;utils.js:316:10)\n    at _callCircusTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:218:40)\n    at _runTest (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:155:3)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:66:9)\n    at _runTestsForDescribeBlock (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:60:9)\n    at run (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;run.js:25:3)\n    at runAndTransformResultsToJestFormat (&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-circus&#x2F;build&#x2F;legacy-code-todo-rewrite&#x2F;jestAdapterInit.js:170:21)&quot;
+          ],
+          &quot;fullName&quot;: &quot;displayPickupErrors should display fullName error&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;failed&quot;,
+          &quot;title&quot;: &quot;should display fullName error&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: &quot;\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mdisplayPickupErrors › should clear previous error messages\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 3 |\u001b[39m describe(\u001b[32m&#39;displayPickupErrors&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m 4 |\u001b[39m     test(\u001b[32m&#39;should clear previous error messages&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 5 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m   |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 6 |\u001b[39m \u001b[32m            &lt;div class&#x3D;\&quot;error-message\&quot; id&#x3D;\&quot;name-error\&quot;&gt;Previous Name Error&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 7 |\u001b[39m \u001b[32m            &lt;div class&#x3D;\&quot;error-message\&quot; id&#x3D;\&quot;location-error\&quot;&gt;Previous Location Error&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 8 |\u001b[39m \u001b[32m            &lt;div class&#x3D;\&quot;error-message\&quot; id&#x3D;\&quot;waste-error\&quot;&gt;Previous Waste Type Error&lt;&#x2F;div&gt;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;displayPickupErrors.test.js\u001b[39m\u001b[0m\u001b[2m:5:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mdisplayPickupErrors › should display location error\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 18 |\u001b[39m     \u001b[22m\n\u001b[2m     \u001b[90m 19 |\u001b[39m     test(\u001b[32m&#39;should display location error&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 20 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 21 |\u001b[39m \u001b[32m            &lt;div class&#x3D;\&quot;error-message\&quot; id&#x3D;\&quot;location-error\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 22 |\u001b[39m \u001b[32m        &#x60;\u001b[39m\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 23 |\u001b[39m         \u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;displayPickupErrors.test.js\u001b[39m\u001b[0m\u001b[2m:20:9)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mdisplayPickupErrors › should display fullName error\u001b[39m\u001b[22m\n\n    \u001b[1m\u001b[31mThe error below may be caused by using the wrong test environment, see \u001b[2m\u001b[4mhttps:&#x2F;&#x2F;jestjs.io&#x2F;docs&#x2F;configuration#testenvironment-string\u001b[24m\u001b[22m\u001b[1m.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31mConsider using the \&quot;jsdom\&quot; test environment.\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22m\n    \u001b[1m\u001b[31m\u001b[39m\u001b[22mReferenceError: document is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 29 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 30 |\u001b[39m     test(\u001b[32m&#39;should display fullName error&#39;\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m&#x3D;&gt;\u001b[39m {\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m&gt;\u001b[22m\u001b[2m\u001b[39m\u001b[90m 31 |\u001b[39m         document\u001b[33m.\u001b[39mbody\u001b[33m.\u001b[39minnerHTML \u001b[33m&#x3D;\u001b[39m \u001b[32m&#x60;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 32 |\u001b[39m \u001b[32m            &lt;div class&#x3D;\&quot;error-message\&quot; id&#x3D;\&quot;name-error\&quot;&gt;&lt;&#x2F;div&gt;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 33 |\u001b[39m \u001b[32m        &#x60;\u001b[39m\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 34 |\u001b[39m         \u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.&lt;anonymous&gt; (\u001b[22m\u001b[2m\u001b[0m\u001b[36mUnit Tests&#x2F;displayPickupErrors.test.js\u001b[39m\u001b[0m\u001b[2m:31:9)\u001b[22m\u001b[2m\u001b[22m\n&quot;
+    },
+    {
+      &quot;leaks&quot;: false,
+      &quot;numFailingTests&quot;: 0,
+      &quot;numPassingTests&quot;: 5,
+      &quot;numPendingTests&quot;: 0,
+      &quot;numTodoTests&quot;: 0,
+      &quot;openHandles&quot;: [],
+      &quot;perfStats&quot;: {
+        &quot;end&quot;: 1752428718929,
+        &quot;runtime&quot;: 162,
+        &quot;slow&quot;: false,
+        &quot;start&quot;: 1752428718767
+      },
+      &quot;skipped&quot;: false,
+      &quot;snapshot&quot;: {
+        &quot;added&quot;: 0,
+        &quot;fileDeleted&quot;: false,
+        &quot;matched&quot;: 0,
+        &quot;unchecked&quot;: 0,
+        &quot;uncheckedKeys&quot;: [],
+        &quot;unmatched&quot;: 0,
+        &quot;updated&quot;: 0
+      },
+      &quot;testFilePath&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;Unit Tests&#x2F;loadAdminData.test.js&quot;,
+      &quot;testResults&quot;: [
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;loadAdminData&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;loadAdminData should load admin data and call necessary functions&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should load admin data and call necessary functions&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;loadAdminData&quot;
+          ],
+          &quot;duration&quot;: 2,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;loadAdminData should handle empty requests&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should handle empty requests&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;loadAdminData&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;loadAdminData should handle null requests&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should handle null requests&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;loadAdminData&quot;
+          ],
+          &quot;duration&quot;: 1,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;loadAdminData should handle undefined requests&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should handle undefined requests&quot;
+        },
+        {
+          &quot;ancestorTitles&quot;: [
+            &quot;loadAdminData&quot;
+          ],
+          &quot;duration&quot;: 0,
+          &quot;failureDetails&quot;: [],
+          &quot;failureMessages&quot;: [],
+          &quot;fullName&quot;: &quot;loadAdminData should not call setupAdminControls if requests are empty&quot;,
+          &quot;invocations&quot;: 1,
+          &quot;location&quot;: null,
+          &quot;numPassingAsserts&quot;: 0,
+          &quot;status&quot;: &quot;passed&quot;,
+          &quot;title&quot;: &quot;should not call setupAdminControls if requests are empty&quot;
+        }
+      ],
+      &quot;failureMessage&quot;: null
+    }
+  ],
+  &quot;wasInterrupted&quot;: false
+}</div>
+        </div>
+        <div class="d-none" id="test-global-config">{
+  &quot;bail&quot;: 0,
+  &quot;changedFilesWithAncestor&quot;: false,
+  &quot;collectCoverage&quot;: false,
+  &quot;collectCoverageFrom&quot;: [],
+  &quot;coverageDirectory&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;coverage&quot;,
+  &quot;coverageProvider&quot;: &quot;babel&quot;,
+  &quot;coverageReporters&quot;: [
+    &quot;json&quot;,
+    &quot;text&quot;,
+    &quot;lcov&quot;,
+    &quot;clover&quot;
+  ],
+  &quot;detectLeaks&quot;: false,
+  &quot;detectOpenHandles&quot;: false,
+  &quot;errorOnDeprecated&quot;: false,
+  &quot;expand&quot;: false,
+  &quot;findRelatedTests&quot;: false,
+  &quot;forceExit&quot;: false,
+  &quot;json&quot;: false,
+  &quot;lastCommit&quot;: false,
+  &quot;listTests&quot;: false,
+  &quot;logHeapUsage&quot;: false,
+  &quot;maxConcurrency&quot;: 5,
+  &quot;maxWorkers&quot;: 3,
+  &quot;noStackTrace&quot;: false,
+  &quot;nonFlagArgs&quot;: [],
+  &quot;notify&quot;: false,
+  &quot;notifyMode&quot;: &quot;failure-change&quot;,
+  &quot;onlyChanged&quot;: false,
+  &quot;onlyFailures&quot;: false,
+  &quot;passWithNoTests&quot;: false,
+  &quot;projects&quot;: [],
+  &quot;reporters&quot;: [
+    [
+      &quot;default&quot;,
+      {}
+    ],
+    [
+      &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;jest-stare&#x2F;lib&#x2F;index.js&quot;,
+      {
+        &quot;resultDir&quot;: &quot;jest-stare&#x2F;&quot;,
+        &quot;reportTitle&quot;: &quot;CleanCity Test Report&quot;,
+        &quot;additionalResultsProcessors&quot;: [],
+        &quot;coverageLink&quot;: &quot;.&#x2F;coverage&#x2F;lcov-report&#x2F;index.html&quot;,
+        &quot;resultHtml&quot;: &quot;index.html&quot;,
+        &quot;resultJson&quot;: &quot;jest-results.json&quot;
+      }
+    ]
+  ],
+  &quot;rootDir&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&quot;,
+  &quot;runTestsByPath&quot;: false,
+  &quot;skipFilter&quot;: false,
+  &quot;testFailureExitCode&quot;: 1,
+  &quot;testPathPattern&quot;: &quot;&quot;,
+  &quot;testSequencer&quot;: &quot;&#x2F;Users&#x2F;la&#x2F;Desktop&#x2F;CleanCity&#x2F;node_modules&#x2F;@jest&#x2F;test-sequencer&#x2F;build&#x2F;index.js&quot;,
+  &quot;updateSnapshot&quot;: &quot;new&quot;,
+  &quot;useStderr&quot;: false,
+  &quot;watch&quot;: false,
+  &quot;watchAll&quot;: false,
+  &quot;watchman&quot;: true
+}</div>
+
+    </main>
+    <hr>
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">jest-stare 2022</span>
+        </div>
+    </footer>
+</body>
+
+</html>
+

@@ -14,10 +14,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "test:coverage": "jest --coverage"
   },
   "eslintConfig": {
     "extends": [
@@ -40,15 +38,10 @@
   "homepage": ".",
   "devDependencies": {
     "jest": "^27.5.1",
-    "jest-localstorage-mock": "^2.4.26"
-  }, 
-  "jest": {
-    "setupFiles": ["jest-localstorage-mock"]
+    "jest-localstorage-mock": "^2.4.26",
+    "jest-stare": "^2.5.2"
   },
-
   "jest": {
-  "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom"
+  }
 }
-}
-
-
